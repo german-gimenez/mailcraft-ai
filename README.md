@@ -25,17 +25,20 @@ Plataforma de Email Marketing potenciada con Inteligencia Artificial
 ## 🚀 Funcionalidades AI
 
 ### AI Campaign Wizard
+
 - Proceso de 4 pasos intuitivo
 - Generación automática de ideas de campaña
 - Predicciones de rendimiento (open rate, click rate)
 - Optimización de contenido con IA
 
 ### Analytics Inteligentes
+
 - Scoring AI para campañas
 - Predicciones de revenue
 - Insights automáticos
 
 ### Templates Mágicos
+
 - Generación automática de HTML
 - Optimización para diferentes industrias
 - Personalización basada en audiencia
