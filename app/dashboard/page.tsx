@@ -48,14 +48,15 @@ export default function DashboardPage() {
   const hasContacts = userProfile.totalContacts > 0;
   const isEmpty = !hasCampaigns && !hasContacts;
 
-  if (isEmpty) {
-    return (
-      <EmptyDashboard 
-        onCreateCampaign={handleCreateCampaign}
-        onImportContacts={handleImportContacts}
-      />
-    );
-  }
+  // TEMPORAL: Forzar dashboard real para testing - v2.1
+  // if (isEmpty) {
+  //   return (
+  //     <EmptyDashboard 
+  //       onCreateCampaign={handleCreateCampaign}
+  //       onImportContacts={handleImportContacts}
+  //     />
+  //   );
+  // }
 
   // Dashboard real con datos
   return (

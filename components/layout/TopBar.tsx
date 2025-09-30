@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Bell, Settings, Command, Sparkles, ChevronDown, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useRouter } from "next/navigation";
 import { useUser, useClerk } from "@clerk/nextjs";
 
@@ -93,6 +94,9 @@ export function TopBar({ title, subtitle }: TopBarProps) {
           >
             <Settings size={20} className="text-gray-700" />
           </button>
+
+          {/* Theme Toggle */}
+          <ThemeToggle />
 
           {/* User Profile Dropdown */}
           <div className="relative" ref={dropdownRef}>

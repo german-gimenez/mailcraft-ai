@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useUser } from '@clerk/nextjs';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -222,20 +223,20 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="container mx-auto p-6 max-w-4xl">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-2">Configuraciones</h1>
-        <p className="text-gray-600">
-          Gestiona tu cuenta, organización y credenciales API
-        </p>
-        <div className="flex items-center gap-2 mt-2">
-          <Badge variant={role === 'super_admin' ? 'destructive' : role === 'admin' ? 'default' : 'secondary'}>
-            {role === 'super_admin' ? 'Super Admin' : role === 'admin' ? 'Admin' : 'Usuario'}
-          </Badge>
-          <span className="text-sm text-gray-500"></span>
-          <span className="text-sm text-gray-500">{user?.emailAddresses[0]?.emailAddress}</span>
+    <DashboardLayout
+      title="Configuraciones"
+      subtitle="Gestiona tu cuenta, organización y credenciales API"
+    >
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-6">
+          <div className="flex items-center gap-2">
+            <Badge variant={role === 'super_admin' ? 'destructive' : role === 'admin' ? 'default' : 'secondary'}>
+              {role === 'super_admin' ? 'Super Admin' : role === 'admin' ? 'Admin' : 'Usuario'}
+            </Badge>
+            <span className="text-sm text-gray-500">•</span>
+            <span className="text-sm text-gray-500">{user?.emailAddresses[0]?.emailAddress}</span>
+          </div>
         </div>
-      </div>
 
       {message && (
         <Alert className={`mb-4 ${message.type === 'error' ? 'border-red-200 bg-red-50' : 
@@ -664,6 +665,7 @@ export default function SettingsPage() {
           </TabsContent>
         )}
       </Tabs>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }
