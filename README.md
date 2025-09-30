@@ -57,7 +57,7 @@ Plataforma de Email Marketing potenciada con Inteligencia Artificial
 
 ```bash
 # Clonar repositorio
-git clone https://github.com/tu-usuario/mailcraft-ai.git
+git clone https://github.com/german-gimenez/mailcraft-ai.git
 cd mailcraft-ai
 
 # Instalar dependencias
