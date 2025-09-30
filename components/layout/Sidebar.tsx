@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useClerk, useUser } from "@clerk/nextjs";
 import {
   Sparkles,
   LayoutDashboard,
@@ -18,6 +19,7 @@ import {
   Search,
   Crown,
   Shield,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -152,6 +154,9 @@ const navigation: {
 
 export function Sidebar({ userRole = "user", currentOrg }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { signOut } = useClerk();
+  const { user } = useUser();
   const [showOrgSwitcher, setShowOrgSwitcher] = useState(false);
 
   const filteredNavigation = (section: keyof typeof navigation) => {
@@ -170,6 +175,15 @@ export function Sidebar({ userRole = "user", currentOrg }: SidebarProps) {
     if (role === "super_admin") return "Super Admin";
     if (role === "admin") return "Admin";
     return "User";
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      router.push("/");
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 
   return (
@@ -391,18 +405,29 @@ export function Sidebar({ userRole = "user", currentOrg }: SidebarProps) {
         )}
 
         {/* User Menu */}
-        <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 cursor-pointer">
-          <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-            U
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="text-sm font-medium text-gray-900 truncate">
-              User Name
+        <div className="border-t border-gray-200 pt-4">
+          <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 cursor-pointer mb-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+              {user?.firstName?.charAt(0) || user?.emailAddresses?.[0]?.emailAddress?.charAt(0) || 'U'}
             </div>
-            <div className="text-xs text-gray-500 truncate">
-              {getUserRoleLabel(userRole)}
+            <div className="flex-1 min-w-0">
+              <div className="text-sm font-medium text-gray-900 truncate">
+                {user?.firstName || 'User'}
+              </div>
+              <div className="text-xs text-gray-500 truncate">
+                {getUserRoleLabel(userRole)}
+              </div>
             </div>
           </div>
+          
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+          >
+            <LogOut size={16} />
+            <span>Cerrar Sesión</span>
+          </button>
         </div>
       </div>
     </aside>
