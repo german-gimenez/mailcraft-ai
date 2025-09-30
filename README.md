@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MailCraft AI 🚀
 
-## Getting Started
+Plataforma de Email Marketing potenciada con Inteligencia Artificial
 
-First, run the development server:
+## ✨ Características Principales
+
+- 🤖 **AI Campaign Wizard**: Generación automática de campañas con IA
+- 📊 **Analytics Inteligentes**: Predicciones de rendimiento y optimización
+- 🎨 **UI Atractiva y Simple**: Dashboard moderno y responsive
+- 📧 **Sistema de Email Avanzado**: Integración con Zoho Mail y Zeptomail
+- 🔐 **Autenticación Segura**: Sistema completo con Clerk
+- 🎯 **Templates Mágicos**: Generación automática de templates
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 15.5.4 + Turbopack
+- **Backend**: Node.js + TypeScript
+- **Database**: Prisma ORM + SQLite
+- **Styling**: Tailwind CSS + Lucide Icons
+- **Auth**: Clerk Authentication
+- **AI**: OpenRouter Integration
+- **Email**: Zoho Mail / Zeptomail
+- **Testing**: Jest + React Testing Library
+
+## 🚀 Funcionalidades AI
+
+### AI Campaign Wizard
+- Proceso de 4 pasos intuitivo
+- Generación automática de ideas de campaña
+- Predicciones de rendimiento (open rate, click rate)
+- Optimización de contenido con IA
+
+### Analytics Inteligentes
+- Scoring AI para campañas
+- Predicciones de revenue
+- Insights automáticos
+
+### Templates Mágicos
+- Generación automática de HTML
+- Optimización para diferentes industrias
+- Personalización basada en audiencia
+
+## 📋 Páginas Implementadas
+
+- ✅ Dashboard principal
+- ✅ AI Tools (herramientas de IA)
+- ✅ Campaigns (gestión de campañas)
+- ✅ Analytics (métricas y reportes)
+- ✅ Templates (plantillas)
+- ✅ Contacts (gestión de contactos)
+- ✅ Brand (configuración de marca)
+- ✅ Billing (facturación)
+- ✅ Team (gestión de equipo)
+- ✅ Settings (configuraciones)
+
+## 🔧 Instalación y Desarrollo
 
 ```bash
+# Clonar repositorio
+git clone https://github.com/tu-usuario/mailcraft-ai.git
+cd mailcraft-ai
+
+# Instalar dependencias
+npm install
+
+# Configurar variables de entorno
+cp .env.example .env.local
+# Editar .env.local con tus claves
+
+# Ejecutar en desarrollo
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build para producción
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌐 Variables de Entorno
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# OpenRouter AI
+OPENROUTER_API_KEY=
 
-## Learn More
+# Email Service (Zoho/Zeptomail)
+ZOHO_MAIL_USER=
+ZOHO_MAIL_PASS=
 
-To learn more about Next.js, take a look at the following resources:
+# Database
+DATABASE_URL=
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# App Settings
+NEXT_PUBLIC_APP_URL=
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📱 Deployment
 
-## Deploy on Vercel
+La aplicación está optimizada para deployment en:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- ✅ **Vercel** (recomendado para Next.js)
+- ✅ **Netlify**
+- ✅ **Railway**
+- ✅ **Render**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎯 Estado del Proyecto
+
+**✅ LISTO PARA PRODUCCIÓN**
+
+- Build exitoso sin errores críticos
+- Todas las funcionalidades implementadas
+- UI completa y responsive
+- Testing configurado
+- Documentación completa
+
+## 🚀 ¿Siguiente Paso?
+
+¡La aplicación está lista para producción! Puedes deployar inmediatamente en Vercel o tu plataforma preferida.
+
+---
+
+**Desarrollado con ❤️ y mucha IA** 🤖
