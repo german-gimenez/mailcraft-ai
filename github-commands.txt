@@ -1,0 +1,6 @@
+# Comandos para conectar con GitHub
+# Reemplaza 'tu-usuario' con tu nombre de usuario de GitHub
+
+git remote add origin https://github.com/tu-usuario/mailcraft-ai.git
+git branch -M main
+git push -u origin main
