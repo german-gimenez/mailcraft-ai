@@ -8,7 +8,7 @@ export default function TestEmailPage() {
   const [isSending, setIsSending] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<any>(null);
   const [emailResult, setEmailResult] = useState<any>(null);
-  const [testEmail, setTestEmail] = useState("");
+  const [testEmail, setTestEmail] = useState("gimenez.ger@gmail.com");
 
   const testConnection = async () => {
     setIsTestingConnection(true);
