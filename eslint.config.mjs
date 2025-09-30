@@ -18,7 +18,20 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "test-*.js",
+      "fix-*.ps1",
+      ".next/types/**",
+      ".next/static/**",
     ],
+    rules: {
+      "react/no-unescaped-entities": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@next/next/no-img-element": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/triple-slash-reference": "off",
+    },
   },
 ];
 

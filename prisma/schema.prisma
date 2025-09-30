@@ -1,0 +1,284 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id              String    @id @default(cuid())
+  clerkOrgId      String    @unique
+  name            String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  brandKit        BrandKit?
+  contacts        Contact[]
+  lists           ContactList[]
+  campaigns       Campaign[]
+  emailTemplates  EmailTemplate[]
+  subscription    Subscription?
+  
+  @@index([clerkOrgId])
+}
+
+model BrandKit {
+  id              String    @id @default(cuid())
+  organizationId  String    @unique
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  logoUrl         String?
+  primaryColor    String    @default("#6366f1")
+  secondaryColor  String    @default("#8b5cf6")
+  textColor       String    @default("#1f2937")
+  backgroundColor String    @default("#ffffff")
+  
+  fontHeading     String    @default("Inter")
+  fontBody        String    @default("Inter")
+  
+  brandTone       String    @default("professional")
+  brandDescription String?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Contact {
+  id              String    @id @default(cuid())
+  email           String
+  firstName       String?
+  lastName        String?
+  tags            String?   // Comma-separated tags for SQLite compatibility
+  status          ContactStatus @default(ACTIVE)
+  
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  lists           ContactListMember[]
+  emailLogs       EmailLog[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@unique([organizationId, email])
+  @@index([organizationId])
+}
+
+model ContactList {
+  id              String    @id @default(cuid())
+  name            String
+  description     String?
+  
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  members         ContactListMember[]
+  campaigns       Campaign[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([organizationId])
+}
+
+model ContactListMember {
+  id              String    @id @default(cuid())
+  contactId       String
+  contact         Contact   @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  listId          String
+  list            ContactList @relation(fields: [listId], references: [id], onDelete: Cascade)
+  
+  addedAt         DateTime  @default(now())
+  
+  @@unique([contactId, listId])
+}
+
+model EmailTemplate {
+  id              String    @id @default(cuid())
+  name            String
+  htmlContent     String
+  category        String?
+  
+  // AI-Enhanced Fields
+  isAIGenerated   Boolean   @default(false)
+  templateType    TemplateType @default(MANUAL)
+  industry        String?
+  purpose         String?
+  aiPrompt        String?   // Original prompt used to generate
+  
+  // AI Optimization
+  aiScore         Float?    // AI predicted performance score
+  aiInsights      String?   // JSON with AI insights
+  
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  campaigns       Campaign[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([organizationId])
+}
+
+model Campaign {
+  id              String    @id @default(cuid())
+  name            String
+  subject         String
+  fromName        String
+  fromEmail       String
+  htmlContent     String
+  
+  status          CampaignStatus @default(DRAFT)
+  sentAt          DateTime?
+  
+  // AI-Enhanced Fields
+  isAIGenerated   Boolean   @default(false)
+  aiSubjectLines  String?   // JSON array of AI generated alternatives
+  aiPreviewText   String?
+  aiSendTime      DateTime? // AI recommended send time
+  aiTargeting     String?   // JSON with AI targeting recommendations
+  
+  // AI Predictions
+  aiOpenRateScore     Float? // Predicted open rate (0-100)
+  aiClickRateScore    Float? // Predicted click rate (0-100)
+  aiConversionScore   Float? // Predicted conversion score (0-100)
+  aiRevenueEstimate   Float? // Estimated revenue
+  
+  // AI Optimization
+  aiOptimizations String?   // JSON with AI suggested optimizations
+  aiInsights      String?   // JSON with AI insights
+  
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  templateId      String?
+  template        EmailTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  
+  listId          String
+  list            ContactList @relation(fields: [listId], references: [id], onDelete: Restrict)
+  
+  analytics       CampaignAnalytics?
+  emailLogs       EmailLog[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([organizationId])
+}
+
+model CampaignAnalytics {
+  id              String    @id @default(cuid())
+  campaignId      String    @unique
+  campaign        Campaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  
+  totalSent       Int       @default(0)
+  totalOpened     Int       @default(0)
+  totalClicked    Int       @default(0)
+  totalBounced    Int       @default(0)
+  totalUnsubscribed Int     @default(0)
+  
+  // AI-Enhanced Analytics
+  openRate        Float     @default(0) // Calculated percentage
+  clickRate       Float     @default(0) // Calculated percentage
+  conversionRate  Float     @default(0) // Calculated percentage
+  
+  // Revenue Tracking
+  totalRevenue    Float     @default(0)
+  avgRevenuePerEmail Float  @default(0)
+  
+  // AI Performance Metrics
+  aiAccuracyScore Float?    // How accurate were AI predictions
+  aiConfidenceScore Float?  // AI confidence in predictions
+  
+  updatedAt       DateTime  @updatedAt
+}
+
+model EmailLog {
+  id              String    @id @default(cuid())
+  campaignId      String
+  campaign        Campaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  
+  contactId       String
+  contact         Contact   @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  contactEmail    String
+  
+  status          EmailStatus @default(PENDING)
+  
+  sentAt          DateTime?
+  openedAt        DateTime?
+  clickedAt       DateTime?
+  
+  opens           Int       @default(0)
+  clicks          Int       @default(0)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([campaignId])
+}
+
+model Subscription {
+  id              String    @id @default(cuid())
+  organizationId  String    @unique
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  plan            Plan      @default(FREE)
+  status          SubscriptionStatus @default(ACTIVE)
+  
+  emailLimit      Int       @default(500)
+  emailsUsed      Int       @default(0)
+  contactLimit    Int       @default(100)
+  
+  mercadoPagoCustomerId     String?
+  mercadoPagoSubscriptionId String?
+  
+  currentPeriodEnd     DateTime?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+enum TemplateType {
+  MANUAL
+  AI_GENERATED
+  AI_OPTIMIZED
+}
+
+enum ContactStatus {
+  ACTIVE
+  UNSUBSCRIBED
+  BOUNCED
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  SENDING
+  SENT
+  PAUSED
+}
+
+enum EmailStatus {
+  PENDING
+  SENT
+  DELIVERED
+  OPENED
+  CLICKED
+  FAILED
+  BOUNCED
+}
+
+enum Plan {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  PAST_DUE
+}
