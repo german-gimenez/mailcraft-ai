@@ -272,7 +272,7 @@ export function Sidebar({ userRole = "user", currentOrg }: SidebarProps) {
         {/* Workspace */}
         {filteredNavigation("workspace").length > 0 && (
           <div>
-            <div className="px-3 text-xs font-semibold text-gray-400 uppercase mb-2">
+            <div className="px-3 text-xs font-semibold text-gray-500 uppercase mb-2">
               Workspace
             </div>
             {filteredNavigation("workspace").map((item) => {
@@ -285,8 +285,8 @@ export function Sidebar({ userRole = "user", currentOrg }: SidebarProps) {
                   className={cn(
                     "w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all mb-1",
                     active
-                      ? "bg-gray-100 text-gray-900"
-                      : "text-gray-600 hover:bg-gray-50"
+                      ? "bg-purple-100 text-purple-700"
+                      : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                   )}
                 >
                   <Icon size={18} />
@@ -300,7 +300,7 @@ export function Sidebar({ userRole = "user", currentOrg }: SidebarProps) {
         {/* Settings */}
         {filteredNavigation("settings").length > 0 && (
           <div>
-            <div className="px-3 text-xs font-semibold text-gray-400 uppercase mb-2">
+            <div className="px-3 text-xs font-semibold text-gray-500 uppercase mb-2">
               Settings
             </div>
             {filteredNavigation("settings").map((item) => {
@@ -313,8 +313,8 @@ export function Sidebar({ userRole = "user", currentOrg }: SidebarProps) {
                   className={cn(
                     "w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all mb-1",
                     active
-                      ? "bg-gray-100 text-gray-900"
-                      : "text-gray-600 hover:bg-gray-50"
+                      ? "bg-purple-100 text-purple-700"
+                      : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                   )}
                 >
                   <Icon size={18} />

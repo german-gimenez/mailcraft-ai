@@ -26,6 +26,7 @@ export function useUserProfile(): UserProfile {
 
     // Verificar si es un usuario nuevo (creado en los últimos 5 minutos)
     const createdAt = user.createdAt;
+    if (!createdAt) return;
     const now = new Date();
     const timeDiff = now.getTime() - createdAt.getTime();
     const minutesDiff = timeDiff / (1000 * 60);
@@ -69,8 +70,8 @@ export function useUpdateUserProfile() {
     }
   };
 
-  const markOnboardingComplete = () => {
-    updateProfile({ hasCompletedOnboarding: true });
+  const markOnboardingComplete = async () => {
+    await updateProfile({ hasCompletedOnboarding: true });
   };
 
   const incrementCampaigns = () => {
