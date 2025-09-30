@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useClerk, useUser } from "@clerk/nextjs";
+import { useUserRole, usePermissions } from "@/lib/hooks/useUserRole";
 import {
   Sparkles,
   LayoutDashboard,
@@ -20,6 +21,9 @@ import {
   Crown,
   Shield,
   LogOut,
+  Globe,
+  Database,
+  UserCog,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -34,7 +38,6 @@ interface NavigationItem {
 }
 
 interface SidebarProps {
-  userRole?: "super_admin" | "admin" | "user";
   currentOrg?: {
     id: string;
     name: string;
@@ -94,7 +97,7 @@ const navigation: {
       label: "Analytics",
       icon: TrendingUp,
       href: "/dashboard/analytics",
-      roles: ["super_admin", "admin", "user"],
+      roles: ["super_admin", "admin"],
     },
   ],
   settings: [
@@ -129,34 +132,42 @@ const navigation: {
   ],
   superadmin: [
     {
-      id: "admin-orgs",
+      id: "organizations",
       label: "Organizations",
       icon: Building2,
-      href: "/admin/organizations",
+      href: "/dashboard/organizations",
       roles: ["super_admin"],
     },
     {
-      id: "admin-users",
+      id: "all-users",
       label: "All Users",
-      icon: Shield,
-      href: "/admin/users",
+      icon: UserCog,
+      href: "/dashboard/all-users",
       roles: ["super_admin"],
     },
     {
-      id: "admin-billing",
+      id: "languages",
+      label: "Languages",
+      icon: Globe,
+      href: "/dashboard/languages",
+      roles: ["super_admin"],
+    },
+    {
+      id: "global-billing",
       label: "Global Billing",
-      icon: CreditCard,
-      href: "/admin/billing",
+      icon: Database,
+      href: "/dashboard/global-billing",
       roles: ["super_admin"],
     },
   ],
 };
 
-export function Sidebar({ userRole = "user", currentOrg }: SidebarProps) {
+export function Sidebar({ currentOrg }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { signOut } = useClerk();
   const { user } = useUser();
+  const userRole = useUserRole(); // Get real user role
   const [showOrgSwitcher, setShowOrgSwitcher] = useState(false);
 
   const filteredNavigation = (section: keyof typeof navigation) => {

@@ -3,6 +3,7 @@
 import React from "react";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
+import { useUserRole } from "@/lib/hooks/useUserRole";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -33,7 +34,7 @@ export function DashboardLayout({
 }: DashboardLayoutProps) {
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar userRole={userRole} currentOrg={currentOrg} />
+      <Sidebar currentOrg={currentOrg} />
 
       <main className="flex-1 flex flex-col h-screen">
         <TopBar title={title} subtitle={subtitle} />
